@@ -162,13 +162,13 @@ app.post('/update-channel-events', async (req, res) => {
 
     // Fetch events from the YouTube API
     const events = await fetchEvents(channelId);
-
     if (events.length === 0) {
       return res.status(404).send('No events found for this channel');
     }
-
+    
     // Check if the channel already exists in the database
     let channelDoc = await LiveEvent.findOne({ channel: channelUrl });
+    console.log('channelDoc', channelDoc)
 
     if (channelDoc) {
       // Update the existing document
@@ -188,6 +188,7 @@ app.post('/update-channel-events', async (req, res) => {
     }
   } catch (error) {
     console.error('Error updating or creating channel events:', error.message);
+    console.error('Error updating or creating channel events:', error);
     res.status(500).send('An error occurred while processing the request');
   }
 });
